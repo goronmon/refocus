@@ -1,0 +1,20 @@
+{
+    "name": "Refocus",
+    "description": "Helps users not waste time by automatically closing time-wasting pages after a set period",
+    "version": "0.1",
+    "manifest_version": 2,
+    "options_page": "options.html",
+    "permissions": [
+        "activeTab",
+        "alarms",
+        "tabs"
+    ],
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "background": {
+        "scripts": ["eventPage.js"],
+        "persistent": false
+    }
+}
