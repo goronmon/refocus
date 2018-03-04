@@ -16,7 +16,9 @@ chrome.windows.onFocusChanged.addListener(function() {
                             localStorage.removeItem('refocusAlarmPauseTime');
 
                             chrome.alarms.clear("RefocusAlarm");
-                            chrome.alarms.create('RefocusAlarm', {delayInMinutes: 1});
+                            chrome.storage.sync.get("refocusTimeLimit", function (value) {
+                                chrome.alarms.create('RefocusAlarm', {delayInMinutes: value});
+                            });
                         }
                         else {
                             var previousPauseTime = parseInt(localStorage.refocusAlarmPauseTime, 10);
@@ -25,7 +27,9 @@ chrome.windows.onFocusChanged.addListener(function() {
                                 localStorage.removeItem('refocusAlarmPauseTime');
 
                                 chrome.alarms.clear("RefocusAlarm");
-                                chrome.alarms.create('RefocusAlarm', {delayInMinutes: 5});
+                                chrome.storage.sync.get("refocusTimeLimit", function (value) {
+                                    chrome.alarms.create('RefocusAlarm', {delayInMinutes: value});
+                                });
                             }
                             else {
                                 var currentTime = Date.now();

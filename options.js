@@ -1,6 +1,6 @@
 // Saves options to chrome.storage
 function save_options() {
-    var timeLimit = document.getElementById('timeLimit').value;
+    var timeLimit = parseInt(document.getElementById('timeLimit').value);
     var closeTab = document.getElementById('closeTab').checked;
     chrome.storage.sync.set({
         refocusTimeLimit: timeLimit,
@@ -20,11 +20,11 @@ function save_options() {
 function restore_options() {
     // Use default value timeLimit of 10 and closeTab of true
     chrome.storage.sync.get({
-        refocusTimeLimit: '10',
+        refocusTimeLimit: 5,
         refocusCloseTab: true
     }, function (items) {
-        document.getElementById('timeLimit').value = items.favoriteColor;
-        document.getElementById('closeTab').checked = items.likesColor;
+        document.getElementById('timeLimit').value = items.refocusTimeLimit;
+        document.getElementById('closeTab').checked = items.refocusCloseTab;
     });
 }
 
