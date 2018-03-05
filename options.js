@@ -20,11 +20,18 @@ function save_options() {
 function restore_options() {
     // Use default value timeLimit of 10 and closeTab of true
     chrome.storage.sync.get({
-        refocusTimeLimit: 5,
-        refocusCloseTab: true
+        refocusTimeLimit: 10,
+        refocusCloseTab: true,
+        blacklist: []
     }, function (items) {
         document.getElementById('timeLimit').value = items.refocusTimeLimit;
         document.getElementById('closeTab').checked = items.refocusCloseTab;
+
+        var blacklistHTML = ""l
+        for(var x = 0; x < items.blacklist.length; x++) {
+            blacklistHTML += '<li>' + items.blacklist[x] + '</li>';
+        }
+        document.getElementById('blacklist').innerHTML = blacklistHTML;
     });
 }
 
