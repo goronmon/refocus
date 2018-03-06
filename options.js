@@ -4,7 +4,8 @@ function save_options() {
     var closeTab = document.getElementById('closeTab').checked;
     chrome.storage.sync.set({
         refocusTimeLimit: timeLimit,
-        refocusCloseTab: closeTab
+        refocusCloseTab: closeTab,
+        blacklist: []
     }, function () {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -27,7 +28,7 @@ function restore_options() {
         document.getElementById('timeLimit').value = items.refocusTimeLimit;
         document.getElementById('closeTab').checked = items.refocusCloseTab;
 
-        var blacklistHTML = ""l
+        var blacklistHTML = "";
         for(var x = 0; x < items.blacklist.length; x++) {
             blacklistHTML += '<li>' + items.blacklist[x] + '</li>';
         }

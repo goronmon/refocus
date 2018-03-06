@@ -1,6 +1,6 @@
 chrome.windows.onFocusChanged.addListener(function() {
     chrome.tabs.query({'active': true}, function (tabs) {
-        var url = tabs[0].url;
+        var url = new URL(tabs[0].url);
 
         chrome.storage.sync.get({
             blacklist: []
@@ -86,7 +86,8 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
         chrome.windows.getAll({ populate: true }, function (windows) {
             windows.forEach(function (window) {
                 window.tabs.forEach(function (tab) {
-                    if (items.blacklist.includes(tab.url.hostname)) {
+                    var url = new URL(tab.url);
+                    if (items.blacklist.includes(url.hostname)) {
                         tabsToClose.push(tab.id);
                     }
                 });
