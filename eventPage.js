@@ -28,7 +28,8 @@ chrome.windows.onFocusChanged.addListener(function() {
                                     var newScheduledTime = (currentTime - previousPauseTime) + previousScheduledTime;
                                     
                                     clearAlarm();
-    
+                                    
+                                    console.log("Alarm resumed: " + new Date(newScheduledTime).toLocaleString());
                                     chrome.alarms.create('RefocusAlarm', {when: newScheduledTime});
                                 }
                             }
@@ -51,6 +52,8 @@ chrome.windows.onFocusChanged.addListener(function() {
                         localStorage.refocusAlarmScheduledTime = alarm.scheduledTime;
                         localStorage.refocusAlarmPauseTime = Date.now();
                         chrome.alarms.clear("RefocusAlarm");
+
+                        console.log("Alarm paused: " + new Date(alarm.scheduledTime).toLocaleString());
                     }
                     else {
                         // Do nothing
@@ -66,6 +69,7 @@ function startAlarm() {
     
     chrome.storage.sync.get("refocusTimeLimit", function (value) {
         chrome.alarms.create('RefocusAlarm', {delayInMinutes: value.refocusTimeLimit});
+        console.log("Alarm started for: " + new Date(new Date().getTime() + 5*60000).toLocaleString());
     });
 }
 
