@@ -25,7 +25,7 @@ function restore_options() {
 
         var blacklistHTML = "";
         for(var x = 0; x < items.blacklist.length; x++) {
-            blacklistHTML += "<li>" + items.blacklist[x] + "<button onclick='deleteItem(" + items.blacklist[x] + ")'/></li>";
+            blacklistHTML += "<li>" + items.blacklist[x] + "<button name='btnDelete' value=\"" + items.blacklist[x] + "\">Delete</button></li>";
         }
         document.getElementById('blacklist').innerHTML = blacklistHTML;
     });
@@ -58,3 +58,11 @@ function updateStatus (text) {
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click',
     save_options);
+
+document.getElementById('blacklist').addEventListener('click', function(event) {
+    handleDelete(event.target);
+});
+function handleDelete(element) {
+    var siteToRemove = element.value;
+    deleteItem(siteToRemove);
+}
