@@ -7,12 +7,7 @@ function save_options() {
         refocusCloseTab: closeTab,
         blacklist: []
     }, function () {
-        // Update status to let user know options were saved.
-        var status = document.getElementById('status');
-        status.textContent = 'Options saved.';
-        setTimeout(function () {
-            status.textContent = '';
-        }, 750);
+        updateStatus('Options saved')
     });
 }
 
@@ -30,10 +25,34 @@ function restore_options() {
 
         var blacklistHTML = "";
         for(var x = 0; x < items.blacklist.length; x++) {
-            blacklistHTML += '<li>' + items.blacklist[x] + '</li>';
+            blacklistHTML += "<li>" + items.blacklist[x] + "<button onclick='deleteItem(" + items.blacklist[x] + ")'/></li>";
         }
         document.getElementById('blacklist').innerHTML = blacklistHTML;
     });
+}
+
+function deleteItem(itemValue) {
+    chrome.storage.sync.get({
+        blacklist: []
+    }, function (items) {
+        var index = items.blacklist.indexOf(itemValue);
+        if (index > -1) {
+            items.blacklist.splice(index, 1);
+        }
+
+        chrome.storage.sync.set({
+            blacklist: items.blacklist
+        }, restore_options);
+    });
+}
+
+function updateStatus (text) {
+    // Update status to let user know options were saved.
+    var status = document.getElementById('status');
+    status.textContent = text;
+    setTimeout(function () {
+        status.textContent = '';
+    }, 750);
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
