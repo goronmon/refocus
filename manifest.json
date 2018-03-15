@@ -3,7 +3,7 @@
     "description": "Helps users not waste time by automatically closing time-wasting pages after a set period",
     "version": "0.3",
     "manifest_version": 2,
-    "options_page": "options.html",
+    "options_page": "settings.html",
     "permissions": [
         "activeTab",
         "alarms",

@@ -25,7 +25,7 @@ function restore_options() {
 
         var blacklistHTML = "";
         for(var x = 0; x < items.blacklist.length; x++) {
-            blacklistHTML += "<li>" + items.blacklist[x] + "<button name='btnDelete' value=\"" + items.blacklist[x] + "\">Delete</button></li>";
+            blacklistHTML += "<li  class='list-group-item'>" + items.blacklist[x] + "<button name='btnDelete' class='btn btn-danger btn-sm btn-delete-item' value=\"" + items.blacklist[x] + "  \"> Delete</button></li>";
         }
         document.getElementById('blacklist').innerHTML = blacklistHTML;
     });

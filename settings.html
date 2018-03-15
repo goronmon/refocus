@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="settings.css">
+    <title>Refocus Settings</title>
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Refocus Settings</h1>
+        </div>
+    </div>
+    <div class="container">
+        Time Limit:
+        <input list="timeLimitOptions" id="timeLimit" type="text">
+    
+        <datalist id="timeLimitOptions">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </datalist>
+    </div>
+
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">When Time Expires</h5>
+                <div>
+                    <label>
+                        <input type="checkbox" id="closeTab"> Close Tab
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container blacklist">
+        <ul id='blacklist' class='list-group'></ul>
+    </div>
+
+    <div id="status"  class="container"></div>
+
+    <div  class="container">
+        <button id="save" class="btn btn-success">Save</button>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+
+</html>

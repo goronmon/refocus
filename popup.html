@@ -1,15 +1,23 @@
-<html>
+<!doctype html>
 
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="popup.css">
+</head>
 <body>
-    <div>
-        <h3>Refocus Extension</h3>
+    <div class="popup-div">
+        <div>
+            <h5>Refocus</h3>
+        </div>
+        <div>
+            <button id="btnBlacklistSite" class="btn btn-primary">Blacklist Site</button>
+        </div>
+        <div id="status"></div>
     </div>
-    <div>
-        <button id="btnBlacklistSite">Blacklist Site</button>
-    </div>
-    <div id="status"></div>
-    <div>
-        <a target="_blank" rel="noopener noreferrer" href="options.html">Options</a>
+
+    <div class="options-div">
+        <a target="_blank" rel="noopener noreferrer" href="settings.html">Settings</a>
     </div>
 
     <script src="popup.js"></script>
