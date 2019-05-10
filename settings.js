@@ -1,8 +1,8 @@
-// Saves options to chrome.storage
+// Saves options to browser.storage
 function save_options() {
     var timeLimit = parseInt(document.getElementById('timeLimit').value);
     var closeTab = document.getElementById('closeTab').checked;
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
         refocusTimeLimit: timeLimit,
         refocusCloseTab: closeTab,
         blacklist: []
@@ -12,27 +12,31 @@ function save_options() {
 }
 
 // Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
+// stored in browser.storage.
+
+function onGetRestore(items) {
+  document.getElementById('timeLimit').value = items.refocusTimeLimit;
+  document.getElementById('closeTab').checked = items.refocusCloseTab;
+
+  var blacklistHTML = "";
+  for(var x = 0; x < items.blacklist.length; x++) {
+      blacklistHTML += "<li  class='list-group-item'>" + items.blacklist[x] + "<button name='btnDelete' class='btn btn-danger btn-sm btn-delete-item' value=\"" + items.blacklist[x] + "  \"> Delete</button></li>";
+  }
+  document.getElementById('blacklist').innerHTML = blacklistHTML;
+}
+
 function restore_options() {
     // Use default value timeLimit of 10 and closeTab of true
-    chrome.storage.sync.get({
+    let getRestore = browser.storage.sync.get({
         refocusTimeLimit: 10,
         refocusCloseTab: true,
         blacklist: []
-    }, function (items) {
-        document.getElementById('timeLimit').value = items.refocusTimeLimit;
-        document.getElementById('closeTab').checked = items.refocusCloseTab;
-
-        var blacklistHTML = "";
-        for(var x = 0; x < items.blacklist.length; x++) {
-            blacklistHTML += "<li  class='list-group-item'>" + items.blacklist[x] + "<button name='btnDelete' class='btn btn-danger btn-sm btn-delete-item' value=\"" + items.blacklist[x] + "  \"> Delete</button></li>";
-        }
-        document.getElementById('blacklist').innerHTML = blacklistHTML;
     });
+    getRestore.then(onGetRestore);
 }
 
 function deleteItem(itemValue) {
-    chrome.storage.sync.get({
+    browser.storage.sync.get({
         blacklist: []
     }, function (items) {
         var index = items.blacklist.indexOf(itemValue);
@@ -40,7 +44,7 @@ function deleteItem(itemValue) {
             items.blacklist.splice(index, 1);
         }
 
-        chrome.storage.sync.set({
+        browser.storage.sync.set({
             blacklist: items.blacklist
         }, restore_options);
     });

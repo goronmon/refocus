@@ -1,7 +1,7 @@
 {
     "name": "Refocus",
     "description": "Helps users not waste time by automatically closing time-wasting pages after a set period",
-    "version": "0.4",
+    "version": "0.5",
     "manifest_version": 2,
     "options_page": "settings.html",
     "permissions": [
@@ -17,5 +17,10 @@
     "background": {
         "scripts": ["eventPage.js"],
         "persistent": false
-    }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+          "id": "refocus@tsgagnon.com"
+        }
+      }
 }

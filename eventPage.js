@@ -1,14 +1,14 @@
-chrome.windows.onFocusChanged.addListener(function () {
-    chrome.tabs.query({ 'active': true, 'currentWindow': true }, function (tabs) {
+browser.windows.onFocusChanged.addListener(function () {
+    browser.tabs.query({ 'active': true, 'currentWindow': true }, function (tabs) {
         if (tabs[0]) {
             var url = new URL(tabs[0].url);
 
-            chrome.storage.sync.get({
+            browser.storage.sync.get({
                 blacklist: []
             }, function (items) {
                 if (items.blacklist.includes(url.hostname)) {
                     // Get alarm
-                    chrome.alarms.get('RefocusAlarm', function (alarm) {
+                    browser.alarms.get('RefocusAlarm', function (alarm) {
                         // If alarm doesn't exist create it
                         if (alarm) {
                             // Do nothing
@@ -29,7 +29,7 @@ chrome.windows.onFocusChanged.addListener(function () {
                                         var newScheduledTime = (currentTime - previousPauseTime) + previousScheduledTime;
 
                                         clearAlarm();
-                                        chrome.alarms.create('RefocusAlarm', { when: newScheduledTime });
+                                        browser.alarms.create('RefocusAlarm', { when: newScheduledTime });
                                     }
                                 }
                             }
@@ -42,7 +42,7 @@ chrome.windows.onFocusChanged.addListener(function () {
                 }
                 else {
                     // Pauser timer
-                    chrome.alarms.get('RefocusAlarm', function (alarm) {
+                    browser.alarms.get('RefocusAlarm', function (alarm) {
                         // If alarm doesn't exist create it
                         if (alarm) {
                             localStorage.removeItem('refocusAlarmScheduledTime');
@@ -50,7 +50,7 @@ chrome.windows.onFocusChanged.addListener(function () {
 
                             localStorage.refocusAlarmScheduledTime = alarm.scheduledTime;
                             localStorage.refocusAlarmPauseTime = Date.now();
-                            chrome.alarms.clear("RefocusAlarm");
+                            browser.alarms.clear("RefocusAlarm");
                         }
                         else {
                             // Do nothing
@@ -65,8 +65,8 @@ chrome.windows.onFocusChanged.addListener(function () {
 function startAlarm() {
     clearAlarm();
     
-    chrome.storage.sync.get("refocusTimeLimit", function (value) {
-        chrome.alarms.create('RefocusAlarm', {delayInMinutes: value.refocusTimeLimit});
+    browser.storage.sync.get("refocusTimeLimit", function (value) {
+        browser.alarms.create('RefocusAlarm', {delayInMinutes: value.refocusTimeLimit});
     });
 }
 
@@ -74,17 +74,17 @@ function clearAlarm() {
     localStorage.removeItem('refocusAlarmScheduledTime');
     localStorage.removeItem('refocusAlarmPauseTime');
 
-    chrome.alarms.clear("RefocusAlarm");
+    browser.alarms.clear("RefocusAlarm");
 }
 
-chrome.alarms.onAlarm.addListener(function(alarm) {
+browser.alarms.onAlarm.addListener(function(alarm) {
     clearAlarm();
 
-    chrome.storage.sync.get({
+    browser.storage.sync.get({
         blacklist: []
     }, function (items) {
         var tabsToClose = [];
-        chrome.windows.getAll({ populate: true }, function (windows) {
+        browser.windows.getAll({ populate: true }, function (windows) {
             windows.forEach(function (window) {
                 window.tabs.forEach(function (tab) {
                     var url = new URL(tab.url);
@@ -94,9 +94,9 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
                 });
             });
 
-            chrome.storage.sync.get("refocusCloseTab", function (closeTabs) {
+            browser.storage.sync.get("refocusCloseTab", function (closeTabs) {
                 if (closeTabs) {
-                    chrome.tabs.remove(tabsToClose);
+                    browser.tabs.remove(tabsToClose);
                 }
                 else {
                     alert("Time's UP!");

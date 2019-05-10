@@ -1,15 +1,15 @@
 function blacklistCurrentSite() {
-    chrome.tabs.query({'active': true, 'currentWindow': true}, function (tabs) {
+    browser.tabs.query({'active': true, 'currentWindow': true}, function (tabs) {
         var url = new URL(tabs[0].url);
         var newBlacklistURL = url.hostname;
 
-        chrome.storage.sync.get({
+        browser.storage.sync.get({
             blacklist: []
         }, function (items) {
             if (!items.blacklist.includes(url.hostname)) {
                 items.blacklist.push(newBlacklistURL);
 
-                chrome.storage.sync.set({
+                browser.storage.sync.set({
                     blacklist: items.blacklist
                 }, function() {
                     updateStatus('Blacklist updated');
