@@ -18,11 +18,19 @@ function onGetRestore(items) {
   document.getElementById('timeLimit').value = items.refocusTimeLimit;
   document.getElementById('closeTab').checked = items.refocusCloseTab;
 
-  var blacklistHTML = "";
+  let blacklist = document.getElementById('blacklist');
   for(var x = 0; x < items.blacklist.length; x++) {
-      blacklistHTML += "<li  class='list-group-item'>" + items.blacklist[x] + "<button name='btnDelete' class='btn btn-danger btn-sm btn-delete-item' value=\"" + items.blacklist[x] + "  \"> Delete</button></li>";
+    let li = document.createElement('li');
+    li.className = 'list-group-item';
+    li.textContent = items.blacklist[x];
+    let button = document.createElement('button');
+    button.name = 'btnDelete';
+    button.className = 'btn btn-danger btn-sm btn-delete-item';
+    button.value = items.blacklist[x];
+    button.textContent = 'Delete';
+    li.appendChild(button);
+    blacklist.appendChild(li);
   }
-  document.getElementById('blacklist').innerHTML = blacklistHTML;
 }
 
 function restore_options() {
