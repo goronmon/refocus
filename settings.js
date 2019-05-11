@@ -19,6 +19,9 @@ function onGetRestore(items) {
   document.getElementById('closeTab').checked = items.refocusCloseTab;
 
   let blacklist = document.getElementById('blacklist');
+  while(blacklist.hasChildNodes()){
+    blacklist.removeChild(blacklist.firstChild);
+  }
   for(var x = 0; x < items.blacklist.length; x++) {
     let li = document.createElement('li');
     li.className = 'list-group-item';
